@@ -1,0 +1,22 @@
+import java.util.* ;
+import java.io.*; 
+public class Solution {
+
+     static int f(int idx,int[] dp, int[] heights)
+    {
+        if(idx==0)return 0;
+        int right=Integer.MAX_VALUE;
+        if(dp[idx]!=-1) return dp[idx];
+        int left=f(idx-1,dp,heights)+ Math.abs(heights[idx-1]-heights[idx]);
+        if(idx>1) right=f(idx-2,dp,heights)+Math.abs(heights[idx-2]-heights[idx]);
+        return dp[idx]=Math.min(left,right);
+    }
+    public static int frogJump(int n, int heights[]) {
+
+         int dp[]=new int[heights.length+1];
+        Arrays.fill(dp,-1);
+
+        return f(heights.length-1,dp,heights);
+    }
+
+}
