@@ -1,0 +1,47 @@
+// DID NOTHING JUST USED LCS Logic
+//If we reverse the given string and then find lcs b/w them it will automatically give
+//Longest Palindromic Subsequence
+
+class Solution {
+    int f(int i,int j,String s,String t,int dp[][])
+    {
+        if(i<0||j<0)
+        {
+            return 0;
+        }
+        if(dp[i][j]!=-1) return dp[i][j];
+        //agr match kr jae characters to idx -1 krdo for both string
+        if(s.charAt(i)==t.charAt(j))
+        {
+            return dp[i][j]=1+f(i-1,j-1,s,t,dp);
+        }
+        //agr match na kre but uske ek previous char match kr rha ho to uss idx ko -1 kro
+        //for both the strings do -1
+        return dp[i][j]=Math.max(f(i-1,j,s,t,dp),f(i,j-1,s,t,dp));
+    }
+    public int longestPalindromeSubseq(String s) {
+        String t=rev(s);
+         int n=s.length();
+        int m=t.length();
+        int dp[][]=new int[n][m];
+        //fill 2d array with -1
+        for(int i=0;i<n;i++)
+        {
+            for(int j=0;j<m;j++)
+            {
+                dp[i][j]=-1;
+            }
+        }
+        return f(n-1,m-1,s,t,dp);
+    }
+     static String rev(String x)
+    {
+        String w="";
+        for(int i=0;i<x.length();i++)
+        {
+            char ch=x.charAt(i);
+            w=ch+w;
+        }
+        return w;
+    }
+}
